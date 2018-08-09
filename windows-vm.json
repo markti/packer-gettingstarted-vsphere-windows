@@ -3,9 +3,9 @@
         "type": "vmware-iso",
 
         "remote_type": "esx5",
-        "remote_host": "{{user `vsphere_hostname`}}",
-        "remote_username": "{{user `vsphere_username`}}",
-        "remote_password": "{{user `vsphere_password`}}",
+        "remote_host": "{{user `esx_hostname`}}",
+        "remote_username": "{{user `esx_username`}}",
+        "remote_password": "{{user `esx_password`}}",
 
         "ssh_username": "packer",
         "ssh_password": "packer",
