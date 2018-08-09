@@ -1,0 +1,24 @@
+{
+    "builders": [{
+        "type": "vmware-iso",
+
+        "remote_type": "esx5",
+        "remote_host": "{{user `vsphere_hostname`}}",
+        "remote_username": "{{user `vsphere_username`}}",
+        "remote_password": "{{user `vsphere_password`}}",
+
+        "iso_url": "http://old-releases.ubuntu.com/releases/precise/ubuntu-12.04.2-server-amd64.iso",
+        "iso_checksum_type": "none",
+        "iso_checksum": "0"
+
+    }],
+    "provisioners": [
+        {
+          "type": "powershell",
+          "inline": [
+            "& $env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /quiet /quit",
+            "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"
+          ]
+        }
+    ]
+  }
